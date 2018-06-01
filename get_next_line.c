@@ -5,41 +5,45 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpoulter <daniel@poulter.co.za>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2018/05/29 10:23:07 by dpoulter          #+#    #+#             */
-/*   Updated: 2018/05/29 11:56:05 by dpoulter         ###   ########.fr       */
+/*   Created: 2018/05/31 12:03:15 by dpoulter          #+#    #+#             */
+/*   Updated: 2018/06/01 15:03:49 by dpoulter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h>
 
 int		get_next_line(const int fd, char **line)
 {
-	int		nread;
-	char 	*test;
+	static char		buff[1000][BUFF_SIZE + 1];
+	int				i;
+	int				j;
+	int				buff_count;
 
-	if(!(test = ft_strnew((size_t)BUFF_SIZE)))
-		return (0);
-	nread=read(fd,test,BUFF_SIZE);
-	if(nread == 0)
-		return (0);
-	printf("%s\n", test);
-	return (1);
+	if ((fd < 0 || line == NULL || read(fd, buff, 0) < 0))
+		return (-1);
+	if (!(*line = (char *)malloc(52000)))
+		return (-1);
+	buff_count = ft_strlen(&buff[fd][0]);
+	if (buff_count == 0)
+		buff_count = read(fd, &buff[fd][0], BUFF_SIZE);
+	buff[fd][buff_count + 1] = 0;
+	i = -1;
+	while (buff_count > 0)
+	{
+		j = 0;
+		while (j < buff_count)
+		{
+			(*line)[++i] = buff[fd][j++];
+			if ((*line)[i] == '\n' && ((*line)[i] = 0) == 0)
+			{
+				ft_strcpy(&buff[fd][0], &buff[fd][j]);
+				return (1);
+			}
+		}
+		buff_count = read(fd, &buff[fd][0], BUFF_SIZE);
+		buff[fd][buff_count] = 0;
+	}
+	if (i >= 0)
+		return (1);
+	return (buff_count);
 }
-
-int		main(int argc, char **argv)
-{
-	int		fd;
-	char	*str;
-
-	if (argc == 1)
-		fd = 0;
-	else if (argc == 2)
-		fd = open(argv[1], O_RDONLY);
-	else
-		return (2);
-	get_next_line(fd, &str);
-	return 0;
-}  
