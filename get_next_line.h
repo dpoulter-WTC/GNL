@@ -6,7 +6,7 @@
 /*   By: dpoulter <daniel@poulter.co.za>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/29 10:13:43 by dpoulter          #+#    #+#             */
-/*   Updated: 2018/05/29 11:53:09 by dpoulter         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:30:04 by dpoulter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,17 +17,6 @@
 
 int						get_next_line(const int fd, char **line);
 
-# define BUFF_SIZE 32
-
-typedef unsigned int	t_fpos;
-
-typedef struct			s_file
-{
-	int		fd;
-	char	*buf;
-	size_t	bufsize;
-	t_fpos	fpos;
-	int		flag;
-}						t_file;
+# define BUFF_SIZE 100
 
 #endif
