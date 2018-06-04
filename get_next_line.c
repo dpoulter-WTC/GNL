@@ -6,7 +6,7 @@
 /*   By: dpoulter <daniel@poulter.co.za>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/05/31 12:03:15 by dpoulter          #+#    #+#             */
-/*   Updated: 2018/06/04 16:30:57 by dpoulter         ###   ########.fr       */
+/*   Updated: 2018/06/04 16:40:38 by dpoulter         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static int	gnl(char buff[BUFF_SIZE + 1], char **line, int *count, const int fd)
 		return (0);
 }
 
-int		get_next_line(const int fd, char **line)
+int			get_next_line(const int fd, char **line)
 {
 	static char		buff[1000000][BUFF_SIZE + 1];
 	int				buff_count;
